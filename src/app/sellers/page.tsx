@@ -1,5 +1,8 @@
-import SellersWrapper from "@/components/organisms/sellers/SellersWrapper";
+import React from "react";
+import AllSellers from "./all-sellers/page";
 
-export default function Sellers() {
-  return <SellersWrapper />;
+function Page() {
+  return <AllSellers />;
 }
+
+export default Page;

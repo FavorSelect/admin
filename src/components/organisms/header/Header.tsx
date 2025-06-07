@@ -1,6 +1,6 @@
 import React from "react";
 import { cn } from "@/utils/cn";
-import Profile from "@/components/molecules/header/Profile";
+import Profile from "@/components/molecules/header/AdminProfile";
 import MenuBreadcrumbBar from "@/components/molecules/header/MenuBreadcrumbBar";
 
 const Header = () => {

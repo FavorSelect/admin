@@ -9,8 +9,10 @@ import { RootState } from "@/store/store";
 import Sidebar from "@/components/organisms/sidebar/Sidebar";
 import Header from "@/components/organisms/header/Header";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
+import { usePathname } from "next/navigation";
 
 function Layout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
   const dispatch = useAppDispatch();
   const isOpen = useAppSelector(
     (state: RootState) => state.toggleSidebar.isOpen
@@ -26,6 +28,12 @@ function Layout({ children }: { children: React.ReactNode }) {
   const handleHamburgerClick = () => {
     dispatch(toggleMobileMenu());
   };
+
+  const isLoginPage = pathname === "/login";
+
+  if (isLoginPage) {
+    return <>{children}</>;
+  }
 
   return (
     <div className="flex flex-col md:flex-row w-full">

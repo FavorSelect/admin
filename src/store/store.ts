@@ -13,17 +13,19 @@ import {
 } from "redux-persist";
 import toggleSidebarReducer from "@/store/slices/toggleSidebarSlice";
 import tabReducer from "@/store/slices/tabSlice";
+import authReducer from "@/store/slices/adminSlice";
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: [],
+  whitelist: ["admin", "authToken"],
 };
 
 const rootReducer = {
   [apiSlice.reducerPath]: apiSlice.reducer,
   toggleSidebar: toggleSidebarReducer,
   tabs: tabReducer,
+  admin: authReducer,
 };
 
 const combinedReducer = combineReducers(rootReducer);

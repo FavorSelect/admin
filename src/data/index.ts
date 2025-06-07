@@ -7,10 +7,10 @@ export * from "./categoryTableColumns";
 export * from "./membershipTableColumns";
 export * from "./productModerationTableColumns";
 export * from "./userTableColumns";
-export * from "./sellerTableColumns";
 export * from "./ordersTableColumns";
 export * from "./sellerTicketTableColumns";
 export * from "./usersTicketTableColumns";
+export * from "./sellerTableColumns";
 
 // table data
 export * from "./newUsersData";
