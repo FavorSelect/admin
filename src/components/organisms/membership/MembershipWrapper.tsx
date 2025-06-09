@@ -4,21 +4,22 @@ import { Button } from "@/components/atoms/Button";
 import Title from "@/components/atoms/Title";
 import DrawerContainer from "@/components/molecules/global/DrawerContainer";
 import Table from "@/components/molecules/global/table/Table";
-import { membershipData, membershipTableColumns } from "@/data";
+import { membershipTableColumns } from "@/data";
 import { Plus } from "lucide-react";
 import AddMembershipForm from "@/components/molecules/membership/AddMembershipForm";
-import { useAppDispatch, useAppSelector } from "@/store/hook";
-import { Tab, Tabs } from "@/components/molecules/global/Tabs";
-import { setMembershipTab } from "@/store/slices/tabSlice";
-import { RootState } from "@/store/store";
-import MembershipGrid from "@/components/molecules/membership/MembershipGrid";
+import { useGetAllMembershipsQuery } from "@/store/api/membershipApi";
 
-const MembershipWrapper = () => {
-  const dispatch = useAppDispatch();
-  const activeTab = useAppSelector(
-    (state: RootState) => state.tabs.membershipActiveTab
-  );
+const MembershipWrapper = ({ token }: { token: string }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const {
+    data: membership,
+    isLoading,
+    error,
+    refetch,
+  } = useGetAllMembershipsQuery(token, {
+    refetchOnMountOrArgChange: true,
+  });
 
   const openAddMembershipDrawer = () => {
     setIsOpen(true);
@@ -36,24 +37,31 @@ const MembershipWrapper = () => {
           <Plus size={18} /> New membership
         </Button>
       </div>
-      <Tabs
-        activeTab={activeTab}
-        onTabChange={(tab) => dispatch(setMembershipTab(tab))}
-      >
-        <Tab label="List">
-          <Table data={membershipData} columns={membershipTableColumns} />
-        </Tab>
-        <Tab label="Grid">
-          <MembershipGrid data={membershipData} />
-        </Tab>
-      </Tabs>
+
+      {isLoading && <p>Loading memberships...</p>}
+
+      {error && (
+        <p className="text-red-500">
+          {typeof error === "string"
+            ? error
+            : "Something went wrong while fetching memberships."}
+        </p>
+      )}
+
+      {!isLoading && !error && membership && (
+        <Table data={membership.memberships} columns={membershipTableColumns} />
+      )}
 
       <DrawerContainer
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         dismissible={false}
       >
-        <AddMembershipForm setIsOpen={setIsOpen} />
+        <AddMembershipForm
+          setIsOpen={setIsOpen}
+          token={token}
+          refetch={refetch}
+        />
       </DrawerContainer>
     </div>
   );

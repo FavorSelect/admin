@@ -15,6 +15,9 @@ const buttonVariants = cva(
           "border border-input bg-accent/20 hover:bg-white/10 hover:text-accent-foreground",
         action:
           "bg-pale-rose text-dark-chocolate px-3 py-2 rounded-md hover:bg-[#f1b9b9] transition duration-200 text-xs font-medium",
+
+        adminReplyBtn:
+          "w-full bg-scarlet-red text-white py-2 rounded-md hover:bg-red-600 transition duration-200 font-semibold text-sm",
       },
       size: {
         default: "h-10 px-4 py-2",

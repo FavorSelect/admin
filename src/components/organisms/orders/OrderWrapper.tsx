@@ -2,19 +2,23 @@
 import React, { useState } from "react";
 import Table from "@/components/molecules/global/table/Table";
 import { Input } from "@/components/atoms/Input";
-import { ordersData, ordersTableColumns } from "@/data";
+import { ordersTableColumns } from "@/data";
 import Title from "@/components/atoms/Title";
 import { Plus, Search } from "lucide-react";
 import { Button } from "@/components/atoms/Button";
+import { useGetOrdersQuery } from "@/store/api/orderApi";
 
-const OrdersWrapper = () => {
+const OrderWrapper = ({ token }: { token: string }) => {
   const [search, setSearch] = useState("");
 
-  const filteredData = ordersData.filter((order) =>
-    [order.id, order.customer, order.status].some((field) =>
-      field.toLowerCase().includes(search.toLowerCase())
-    )
-  );
+  const { data: orders, isLoading, isError } = useGetOrdersQuery(token);
+
+  const filteredData =
+    orders?.orders?.filter((order) =>
+      [String(order.id), order.customer, order.orderStatus].some((field) =>
+        field?.toLowerCase().includes(search.toLowerCase())
+      )
+    ) || [];
 
   return (
     <div className="space-y-5">
@@ -38,9 +42,18 @@ const OrdersWrapper = () => {
         />
       </div>
 
-      <Table columns={ordersTableColumns} data={filteredData} />
+      {isLoading && <p className="text-gray-500 italic">Loading orders...</p>}
+      {isError && (
+        <p className="text-sm text-red-500">
+          Failed to load orders. Please try again.
+        </p>
+      )}
+
+      {!isLoading && !isError && (
+        <Table columns={ordersTableColumns} data={filteredData} />
+      )}
     </div>
   );
 };
 
-export default OrdersWrapper;
+export default OrderWrapper;

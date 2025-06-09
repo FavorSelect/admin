@@ -1,5 +1,12 @@
-import OrdersWrapper from "@/components/organisms/orders/OrdersWrapper";
+import OrderWrapper from "@/components/organisms/orders/OrderWrapper";
+import { cookies } from "next/headers";
 
-export default function Orders() {
-  return <OrdersWrapper />;
+export default async function Orders() {
+  const cookieStore = await cookies();
+
+  const token = cookieStore.get("token")?.value;
+
+  if (!token || token === "undefined") return;
+
+  return <OrderWrapper token={token} />;
 }

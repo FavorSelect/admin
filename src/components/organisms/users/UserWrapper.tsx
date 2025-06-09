@@ -4,8 +4,8 @@ import Table from "@/components/molecules/global/table/Table";
 import { Input } from "@/components/atoms/Input";
 import Title from "@/components/atoms/Title";
 import { Search } from "lucide-react";
-import { useGetUsersQuery } from "@/store/api/adminDashboardApi";
-import { User } from "@/types";
+import { useGetUsersQuery } from "@/store/api/userApi";
+import { User } from "@/types/user";
 import { userTableColumns } from "@/data";
 
 const UserWrapper = ({ token }: { token: string }) => {
@@ -36,7 +36,7 @@ const UserWrapper = ({ token }: { token: string }) => {
       </div>
 
       {isLoading ? (
-        <p>Loading users...</p>
+        <p className="text-gray-500 italic">Loading users...</p>
       ) : isError ? (
         <p className="text-red-500">Failed to fetch users.</p>
       ) : (

@@ -1,4 +1,4 @@
-import ActiveSellersWrapper from "@/components/organisms/sellers/ActiveSellersWrapper";
+import SellersWrapper from "@/components/organisms/sellers/SellersWrapper";
 import { cookies } from "next/headers";
 
 export default async function AllSellers() {
@@ -7,5 +7,5 @@ export default async function AllSellers() {
   const token = cookieStore.get("token")?.value;
 
   if (!token || token === "undefined") return;
-  return <ActiveSellersWrapper token={token} />;
+  return <SellersWrapper token={token} />;
 }

@@ -1,36 +1,14 @@
-import { deletionRequestsData } from "@/data/deletionRequestsData";
-import { notFound } from "next/navigation";
+import DeletionRequestDetailsWrapper from "@/components/organisms/deletion-request/DeletionRequestDetailsWrapper";
+import { cookies } from "next/headers";
 
 type Params = Promise<{ id: string }>;
 
-export default async function DeletionDetailPage({
-  params,
-}: {
-  params: Params;
-}) {
+export default async function Page({ params }: { params: Params }) {
   const { id } = await params;
+  const cookieStore = await cookies();
 
-  const request = deletionRequestsData.find(
-    (item) => item.requestId === `#${id}`
-  );
+  const token = cookieStore.get("token")?.value;
 
-  if (!request) return notFound();
-
-  return (
-    <div className="space-y-3 text-sm">
-      <h1 className="text-xl font-semibold">Deletion Request Details</h1>
-      <p>
-        <strong>Request ID:</strong> {request.requestId}
-      </p>
-      <p>
-        <strong>User:</strong> {request.user}
-      </p>
-      <p>
-        <strong>Date:</strong> {request.date}
-      </p>
-      <p>
-        <strong>Status:</strong> {request.status}
-      </p>
-    </div>
-  );
+  if (!token || token === "undefined") return;
+  return <DeletionRequestDetailsWrapper id={id} token={token} />;
 }

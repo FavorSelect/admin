@@ -1,8 +1,17 @@
 import { ColumnConfig } from "@/types";
+import { format } from "date-fns";
 
 export const supportTicketsColumns: ColumnConfig[] = [
-  { key: "ticketId", type: "text", label: "Ticket ID" },
+  { key: "ticketNumber", type: "text", label: "Ticket No" },
   { key: "subject", type: "text", label: "Subject" },
+  { key: "description", type: "text", label: "Description" },
+  { key: "adminReply", type: "text", label: "Admin Reply" },
+  { key: "type", type: "text", label: "Type" },
   { key: "status", type: "text", label: "Status" },
-  { key: "priority", type: "text", label: "Priority" },
+  {
+    key: "createdAt",
+    type: "text",
+    label: "Created At",
+    render: (row) => format(new Date(row.createdAt), "dd MMM yyyy"),
+  },
 ];

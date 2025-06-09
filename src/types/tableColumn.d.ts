@@ -5,7 +5,8 @@ export type CellType =
   | "checkbox"
   | "image"
   | "select"
-  | "custom";
+  | "custom"
+  | "boolean";
 
 export interface RowData {
   id?: string | number;

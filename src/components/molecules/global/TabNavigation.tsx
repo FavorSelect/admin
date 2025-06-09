@@ -21,11 +21,11 @@ interface TabNavigationProps {
 
 const TabNavigation: React.FC<TabNavigationProps> = ({
   tabs,
-  defaultTab,
   orientation = "vertical",
   className = "",
 }) => {
   const pathname = usePathname();
+  const activeTab = tabs.find((tab) => tab.href === pathname) || tabs[0];
 
   const isHorizontal = orientation === "horizontal";
 
@@ -37,9 +37,7 @@ const TabNavigation: React.FC<TabNavigationProps> = ({
       )}
     >
       {tabs.map((tab, index) => {
-        const isActive =
-          (pathname === "/sellers" && tab.href === defaultTab) ||
-          pathname.startsWith(tab.href);
+        const isActive = tab.href === activeTab.href;
 
         return isHorizontal ? (
           <Button

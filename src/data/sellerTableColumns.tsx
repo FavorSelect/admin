@@ -38,7 +38,7 @@ export const allSellersTableColumns: ColumnConfig[] = [
     label: "Actions",
     render: (row) => (
       <Link
-        href={`/sellers/${row.id}`}
+        href={`/sellers/all-sellers/${row.id}`}
         className="text-sm font-medium text-scarlet-red hover:underline"
       >
         View Details
@@ -59,7 +59,7 @@ export const pendingSellersTableColumns: ColumnConfig[] = [
     label: "Actions",
     render: (row) => (
       <Link
-        href={`/sellers/${row.id}`}
+        href={`/sellers/pending-sellers/${row.id}`}
         className="text-sm font-medium text-scarlet-red hover:underline"
       >
         View Details

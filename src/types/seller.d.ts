@@ -39,7 +39,7 @@ export interface SellersResponse {
 }
 export interface SellersResponseById {
   message: string;
-  seller: Seller[];
+  seller: Seller;
 }
 
 export interface PendingSellersResponse {
@@ -49,5 +49,5 @@ export interface PendingSellersResponse {
 
 export interface PendingSellersResponseById {
   success: boolean;
-  seller: Seller[];
+  seller: Seller;
 }

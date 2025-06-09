@@ -20,8 +20,6 @@ export * from "./deletionRequestsData";
 export * from "./categoryData";
 export * from "./membershipData";
 export * from "./productModerationData";
-export * from "./userData";
-export * from "./sellersData";
 export * from "./ordersData";
 export * from "./sellersTicketData";
 export * from "./usersTicketData";

@@ -1,36 +1,13 @@
+import { apiSlice } from "./api";
 import {
   PendingSellersResponse,
   PendingSellersResponseById,
   SellersResponse,
   SellersResponseById,
-  UserResponse,
-} from "@/types";
-import { apiSlice } from "./api";
+} from "@/types/seller";
 
-export const adminDashboardApi = apiSlice.injectEndpoints({
-  overrideExisting: true,
+export const sellerApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getUsers: builder.query<UserResponse, string>({
-      query: (token: string) => ({
-        url: "api/admin/dashboard/users",
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }),
-      transformResponse: (response: UserResponse): UserResponse => {
-        const transformedUsers = response.users.map((user) => ({
-          ...user,
-          name: `${user.firstName} ${user.lastName || ""}`.trim(),
-        }));
-
-        return {
-          ...response,
-          users: transformedUsers,
-        };
-      },
-    }),
-
     getAllSellers: builder.query<SellersResponse, string>({
       query: (token) => ({
         url: "api/admin/dashboard/sellers",
@@ -40,7 +17,6 @@ export const adminDashboardApi = apiSlice.injectEndpoints({
         },
       }),
     }),
-
     getPendingSellers: builder.query<PendingSellersResponse, string>({
       query: (token) => ({
         url: "api/admin/dashboard/pending-seller",
@@ -74,20 +50,18 @@ export const adminDashboardApi = apiSlice.injectEndpoints({
         },
       }),
     }),
-
     approveSeller: builder.mutation<
       { message: string },
       { token: string; id: string }
     >({
       query: ({ token, id }) => ({
-        url: `api/admin/dashboard/${id}/approve`,
+        url: `api/admin/dashboard/pending-seller/${id}/approve`,
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`,
         },
       }),
     }),
-
     rejectSeller: builder.mutation<
       { message: string },
       { token: string; id: string }
@@ -101,14 +75,14 @@ export const adminDashboardApi = apiSlice.injectEndpoints({
       }),
     }),
   }),
+  overrideExisting: false,
 });
 
 export const {
-  useGetUsersQuery,
   useGetAllSellersQuery,
   useGetPendingSellersQuery,
   useGetSellerByIdQuery,
   useGetPendingSellerByIdQuery,
   useApproveSellerMutation,
   useRejectSellerMutation,
-} = adminDashboardApi;
+} = sellerApi;

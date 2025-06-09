@@ -26,7 +26,7 @@ const getCellClass = (key: string, value: string): string => {
 };
 
 const getStatusStyles = (status: string): string => {
-  switch (status.toLowerCase()) {
+  switch (status.trim().toLowerCase()) {
     case "pending":
       return "bg-yellow-100 text-yellow-700 px-3 py-1 rounded-md";
     case "approved":
@@ -176,7 +176,16 @@ const CellRenderer: React.FC<CellRendererProps> = ({
           )}
         </div>
       );
-
+    case "boolean":
+      return (
+        <span
+          className={`px-3 py-1 rounded-md text-sm font-medium ${
+            row[key] ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
+          }`}
+        >
+          {row[key] ? "Yes" : "No"}
+        </span>
+      );
     default:
       return null;
   }

@@ -19,7 +19,11 @@ const StatsCard: React.FC<StatsCardProps> = ({
   return (
     <div className="bg-pale-rose text-dark-chocolate rounded-lg h-34 pl-4 flex flex-col justify-center gap-1">
       <h4 className="text-sm font-medium">{title}</h4>
-      <p className="text-2xl font-bold">${Number(value).toLocaleString()}</p>
+      <p className="text-2xl font-bold">
+        {title.includes("Total Revenue")
+          ? `$${Number(value).toLocaleString()}`
+          : Number(value).toLocaleString()}
+      </p>
       <p className={`text-sm font-medium ${changeColor}`}>
         {changeType === "positive" ? "+" : "-"}
         {change}%

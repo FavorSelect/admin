@@ -1,5 +1,10 @@
-import TicketsWrapper from "@/components/organisms/tickets/TicketsWrapper";
+import TicketsLayout from "./(tickets)/layout";
+import SellerTickets from "./(tickets)/seller-tickets/page";
 
 export default function Tickets() {
-  return <TicketsWrapper />;
+  return (
+    <TicketsLayout>
+      <SellerTickets />
+    </TicketsLayout>
+  );
 }

@@ -1,8 +1,12 @@
-import React from "react";
-import AllSellers from "./all-sellers/page";
+import AllSellers from "./(sellers)/all-sellers/page";
+import SellersLayout from "./(sellers)/layout";
 
 function Page() {
-  return <AllSellers />;
+  return (
+    <SellersLayout>
+      <AllSellers />
+    </SellersLayout>
+  );
 }
 
 export default Page;
