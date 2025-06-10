@@ -1,5 +1,10 @@
-import CategoriesWrapper from "@/components/organisms/categories/CategoriesWrapper";
+import CategoryList from "./(categories)/category-list/page";
+import CategoryLayout from "./(categories)/layout";
 
-export default function Categories() {
-  return <CategoriesWrapper />;
+export default function Category() {
+  return (
+    <CategoryLayout>
+      <CategoryList />
+    </CategoryLayout>
+  );
 }

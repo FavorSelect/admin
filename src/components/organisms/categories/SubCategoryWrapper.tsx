@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/atoms/Button";
 import Title from "@/components/atoms/Title";
-import AddCategoryForm from "@/components/molecules/categories/AddCategoryForm";
+import AddSubCategoryForm from "@/components/molecules/categories/AddSubCategoryForm";
 import DrawerContainer from "@/components/molecules/global/DrawerContainer";
 import Table from "@/components/molecules/global/table/Table";
 import { categoryColumns } from "@/data";
@@ -9,24 +9,20 @@ import { useGetAllCategoriesQuery } from "@/store/api/categoryApi";
 import { Plus } from "lucide-react";
 import React, { useState } from "react";
 
-const CategoriesWrapper = ({ token }: { token: string }) => {
-  const { data, isLoading, isError, refetch } = useGetAllCategoriesQuery({
+const SubCategoryWrapper = ({ token }: { token: string }) => {
+  const { data, refetch } = useGetAllCategoriesQuery({
     token,
   });
-  console.log(data?.categories);
+
+  const subCategories = data?.categories.flatMap(
+    (category) => category.subcategories
+  );
+
   const [isOpen, setIsOpen] = useState(false);
 
   const addCategory = () => {
     setIsOpen(true);
   };
-
-  if (isLoading) {
-    return <p className="text-gray-500 italic">Loading category...</p>;
-  }
-
-  if (isError) {
-    return <h2>there is some problem to get categories</h2>;
-  }
 
   return (
     <div className="space-y-5">
@@ -37,11 +33,11 @@ const CategoriesWrapper = ({ token }: { token: string }) => {
           variant="action"
           className="text-sm bg-scarlet-red hover:bg-red-500 text-white"
         >
-          <Plus size={18} /> Add Category
+          <Plus size={18} /> Add Sub Category
         </Button>
       </div>
       <Table
-        data={data?.categories || []}
+        data={subCategories || []}
         columns={categoryColumns}
         token={token}
         refetch={refetch}
@@ -51,14 +47,15 @@ const CategoriesWrapper = ({ token }: { token: string }) => {
         setIsOpen={setIsOpen}
         dismissible={false}
       >
-        <AddCategoryForm
-          setIsOpen={setIsOpen}
-          token={token}
+        <AddSubCategoryForm
           refetch={refetch}
+          token={token}
+          setIsOpen={setIsOpen}
+          categories={data?.categories || []}
         />
       </DrawerContainer>
     </div>
   );
 };
 
-export default CategoriesWrapper;
+export default SubCategoryWrapper;

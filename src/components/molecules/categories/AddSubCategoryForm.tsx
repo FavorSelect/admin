@@ -19,20 +19,23 @@ export type CategoryFormValues = {
   name: string;
   description: string;
   image?: FileList;
+  parentCategoryId?: string;
 };
 
-const AddCategoryForm = ({
+const AddSubCategoryForm = ({
   setIsOpen,
   token,
   refetch,
   initialData,
   editId,
+  categories,
 }: {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   token: string;
   refetch: () => void;
   initialData?: CategoryFormValues;
   editId?: string;
+  categories: { id: string; categoryName: string }[];
 }) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(
@@ -85,7 +88,7 @@ const AddCategoryForm = ({
     const formData = new FormData();
     formData.append("categoryName", data.name);
     formData.append("categoryDescription", data.description);
-    formData.append("parentCategoryId", "null");
+    formData.append("parentCategoryId", data.parentCategoryId || "null");
 
     if (data.image && data.image.length > 0) {
       formData.append("categoryImage", data.image[0]);
@@ -131,14 +134,36 @@ const AddCategoryForm = ({
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 px-4">
         <h2 className="text-lg font-semibold">Add New Category</h2>
-
+        <div className="space-y-1">
+          <label className="text-sm font-medium" htmlFor="parentCategoryId">
+            Parent Category
+          </label>
+          <select
+            id="parentCategoryId"
+            {...register("parentCategoryId", {
+              required: "Please select a parent category",
+            })}
+            className="w-full py-2 px-3 border border-gray-300 text-sm rounded-md font-medium"
+            defaultValue=""
+          >
+            <option value="" disabled>
+              Select a category
+            </option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.categoryName}
+              </option>
+            ))}
+          </select>
+          <ErrorMessage error={errors.parentCategoryId} />
+        </div>
         {/* Category Name */}
         <div className="space-y-1">
           <label
             className="inline-block font-semibold text-sm"
             htmlFor="categoryName"
           >
-            Category Name
+            Sub Category Name
           </label>
           <Input
             id="categoryName"
@@ -214,8 +239,8 @@ const AddCategoryForm = ({
                 ? "Updating..."
                 : "Creating..."
               : isEdit
-              ? "Update Category"
-              : "Add Category"}
+              ? "Update Sub Category"
+              : "Add Sub Category"}
           </Button>
         </div>
       </form>
@@ -223,4 +248,4 @@ const AddCategoryForm = ({
   );
 };
 
-export default AddCategoryForm;
+export default AddSubCategoryForm;

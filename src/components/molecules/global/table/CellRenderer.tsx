@@ -10,6 +10,8 @@ interface CellRendererProps {
   rowIndex: number;
   dropdownId: string | null;
   setDropdownId: (id: string | null) => void;
+  token?: string;
+  refetch?: () => void;
 }
 
 const getCellClass = (key: string, value: string): string => {
@@ -85,6 +87,8 @@ const CellRenderer: React.FC<CellRendererProps> = ({
   rowIndex,
   dropdownId,
   setDropdownId,
+  token,
+  refetch,
 }) => {
   const key = column.key;
 
@@ -93,7 +97,7 @@ const CellRenderer: React.FC<CellRendererProps> = ({
     setDropdownId(null);
   };
 
-  if (column.render) return <>{column.render(row)}</>;
+  if (column.render) return <>{column.render(row, token, refetch)}</>;
 
   switch (type) {
     case "text":

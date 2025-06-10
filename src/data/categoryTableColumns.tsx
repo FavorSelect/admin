@@ -1,35 +1,43 @@
 import { ColumnConfig } from "@/types";
 import Image from "next/image";
-import Link from "next/link";
+import { format } from "date-fns";
+import EditCategory from "@/components/molecules/categories/EditCategory";
 
 export const categoryColumns: ColumnConfig[] = [
   {
-    key: "image",
+    key: "categoryImage",
     type: "custom",
     label: "Image",
     render: (row) => (
       <Image
-        src={row.image}
-        alt={row.name}
+        src={row.categoryImage}
+        alt={row.categoryName}
         className="h-13 w-13 rounded-full object-cover mx-auto"
         width={50}
         height={50}
       />
     ),
   },
-  { key: "name", type: "text", label: "Name" },
-  { key: "description", type: "text", label: "Description" },
+  { key: "categoryName", type: "text", label: "Name" },
+  { key: "categoryDescription", type: "text", label: "Description" },
+  {
+    key: "createdAt",
+    type: "text",
+    label: "Created",
+    render: (row) => format(new Date(row.createdAt), "dd MMM yyyy"),
+  },
+  {
+    key: "updatedAt",
+    type: "text",
+    label: "Updated",
+    render: (row) => format(new Date(row.updatedAt), "dd MMM yyyy"),
+  },
   {
     key: "actions",
     type: "custom",
     label: "Actions",
-    render: (row) => (
-      <Link
-        href={`/categories/edit/${row.id}`}
-        className="text-sm font-medium text-scarlet-red hover:underline"
-      >
-        Edit
-      </Link>
-    ),
+    render: (row, token, refetch) =>
+      token !== undefined &&
+      refetch && <EditCategory row={row} token={token} refetch={refetch} />,
   },
 ];

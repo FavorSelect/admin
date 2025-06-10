@@ -65,10 +65,7 @@ const RecentActivity = ({ token }: { token: string }) => {
             <>
               <Table data={usersData?.users || []} columns={newUsersColumns} />
               <div className="flex justify-end mt-4">
-                <Button
-                  variant="action"
-                  onClick={() => router.push("/dashboard/users")}
-                >
+                <Button variant="action" onClick={() => router.push("/users")}>
                   View All Users
                 </Button>
               </div>
@@ -91,10 +88,7 @@ const RecentActivity = ({ token }: { token: string }) => {
                 columns={recentOrdersColumns}
               />
               <div className="flex justify-end mt-4">
-                <Button
-                  variant="action"
-                  onClick={() => router.push("/dashboard/orders")}
-                >
+                <Button variant="action" onClick={() => router.push("/orders")}>
                   View All Orders
                 </Button>
               </div>
@@ -119,7 +113,7 @@ const RecentActivity = ({ token }: { token: string }) => {
               <div className="flex justify-end mt-4">
                 <Button
                   variant="action"
-                  onClick={() => router.push("/dashboard/tickets")}
+                  onClick={() => router.push("/tickets")}
                 >
                   View All Tickets
                 </Button>

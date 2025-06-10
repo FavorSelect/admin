@@ -8,12 +8,16 @@ interface ReusableTableProps {
   data: RowData[];
   columns: ColumnConfig[];
   isExpandTableWidth?: boolean;
+  token?: string;
+  refetch?: () => void;
 }
 
 const Table: React.FC<ReusableTableProps> = ({
   data,
   columns,
   isExpandTableWidth,
+  token,
+  refetch,
 }) => {
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
 
@@ -61,6 +65,8 @@ const Table: React.FC<ReusableTableProps> = ({
                     rowIndex={rowIndex}
                     dropdownId={openDropdownId}
                     setDropdownId={setOpenDropdownId}
+                    token={token}
+                    refetch={refetch}
                   />
                 </td>
               ))}

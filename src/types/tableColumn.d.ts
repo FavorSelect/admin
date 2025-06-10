@@ -24,5 +24,9 @@ export interface ColumnConfig {
   };
   selectOptions?: string[];
   onSelectChange?: (row: RowData, value: string) => void;
-  render?: (row: RowData) => React.ReactNode;
+  render?: (
+    row: RowData,
+    token?: string,
+    refetch?: () => void
+  ) => React.ReactNode;
 }
