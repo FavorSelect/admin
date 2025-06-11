@@ -10,6 +10,7 @@ interface ReusableTableProps {
   isExpandTableWidth?: boolean;
   token?: string;
   refetch?: () => void;
+  categories?: { id: string; categoryName: string }[];
 }
 
 const Table: React.FC<ReusableTableProps> = ({
@@ -18,6 +19,7 @@ const Table: React.FC<ReusableTableProps> = ({
   isExpandTableWidth,
   token,
   refetch,
+  categories,
 }) => {
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
 
@@ -67,6 +69,7 @@ const Table: React.FC<ReusableTableProps> = ({
                     setDropdownId={setOpenDropdownId}
                     token={token}
                     refetch={refetch}
+                    categories={categories}
                   />
                 </td>
               ))}

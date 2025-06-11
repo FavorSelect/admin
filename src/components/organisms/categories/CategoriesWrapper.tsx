@@ -1,6 +1,5 @@
 "use client";
 import { Button } from "@/components/atoms/Button";
-import Title from "@/components/atoms/Title";
 import AddCategoryForm from "@/components/molecules/categories/AddCategoryForm";
 import DrawerContainer from "@/components/molecules/global/DrawerContainer";
 import Table from "@/components/molecules/global/table/Table";
@@ -13,7 +12,7 @@ const CategoriesWrapper = ({ token }: { token: string }) => {
   const { data, isLoading, isError, refetch } = useGetAllCategoriesQuery({
     token,
   });
-  console.log(data?.categories);
+
   const [isOpen, setIsOpen] = useState(false);
 
   const addCategory = () => {
@@ -30,8 +29,13 @@ const CategoriesWrapper = ({ token }: { token: string }) => {
 
   return (
     <div className="space-y-5">
-      <div className="flex justify-between items-center">
-        <Title text="Categories" />
+      <Table
+        data={data?.categories || []}
+        columns={categoryColumns}
+        token={token}
+        refetch={refetch}
+      />
+      <div className="flex justify-end items-center">
         <Button
           onClick={addCategory}
           variant="action"
@@ -40,12 +44,6 @@ const CategoriesWrapper = ({ token }: { token: string }) => {
           <Plus size={18} /> Add Category
         </Button>
       </div>
-      <Table
-        data={data?.categories || []}
-        columns={categoryColumns}
-        token={token}
-        refetch={refetch}
-      />
       <DrawerContainer
         isOpen={isOpen}
         setIsOpen={setIsOpen}

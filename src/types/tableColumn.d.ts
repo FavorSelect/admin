@@ -27,6 +27,7 @@ export interface ColumnConfig {
   render?: (
     row: RowData,
     token?: string,
-    refetch?: () => void
+    refetch?: () => void,
+    categories?: { id: string; categoryName: string }[]
   ) => React.ReactNode;
 }

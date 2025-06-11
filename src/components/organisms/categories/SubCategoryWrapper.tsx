@@ -1,10 +1,9 @@
 "use client";
 import { Button } from "@/components/atoms/Button";
-import Title from "@/components/atoms/Title";
 import AddSubCategoryForm from "@/components/molecules/categories/AddSubCategoryForm";
 import DrawerContainer from "@/components/molecules/global/DrawerContainer";
 import Table from "@/components/molecules/global/table/Table";
-import { categoryColumns } from "@/data";
+import { subCategoryTableColumn } from "@/data/subCategoryTableColumn";
 import { useGetAllCategoriesQuery } from "@/store/api/categoryApi";
 import { Plus } from "lucide-react";
 import React, { useState } from "react";
@@ -14,11 +13,15 @@ const SubCategoryWrapper = ({ token }: { token: string }) => {
     token,
   });
 
+  const [isOpen, setIsOpen] = useState(false);
+
   const subCategories = data?.categories.flatMap(
     (category) => category.subcategories
   );
-
-  const [isOpen, setIsOpen] = useState(false);
+  const categories = (data?.categories || []).map(({ id, categoryName }) => ({
+    id: id.toString(),
+    categoryName,
+  }));
 
   const addCategory = () => {
     setIsOpen(true);
@@ -26,8 +29,14 @@ const SubCategoryWrapper = ({ token }: { token: string }) => {
 
   return (
     <div className="space-y-5">
-      <div className="flex justify-between items-center">
-        <Title text="Categories" />
+      <Table
+        data={subCategories || []}
+        columns={subCategoryTableColumn}
+        token={token}
+        refetch={refetch}
+        categories={categories}
+      />
+      <div className="flex justify-end items-center">
         <Button
           onClick={addCategory}
           variant="action"
@@ -36,12 +45,6 @@ const SubCategoryWrapper = ({ token }: { token: string }) => {
           <Plus size={18} /> Add Sub Category
         </Button>
       </div>
-      <Table
-        data={subCategories || []}
-        columns={categoryColumns}
-        token={token}
-        refetch={refetch}
-      />
       <DrawerContainer
         isOpen={isOpen}
         setIsOpen={setIsOpen}
@@ -51,7 +54,7 @@ const SubCategoryWrapper = ({ token }: { token: string }) => {
           refetch={refetch}
           token={token}
           setIsOpen={setIsOpen}
-          categories={data?.categories || []}
+          categories={categories}
         />
       </DrawerContainer>
     </div>

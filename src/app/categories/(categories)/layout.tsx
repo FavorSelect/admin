@@ -24,7 +24,7 @@ export default function CategoryLayout({
 }) {
   return (
     <div className="flex flex-col space-y-5">
-      <Title text="Category" />
+      <Title text="Category management" />
       <TabNavigation tabs={tabs} orientation="horizontal" />
       <div>{children}</div>
     </div>

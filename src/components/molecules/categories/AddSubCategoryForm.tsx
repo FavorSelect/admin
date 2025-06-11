@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { Input } from "@/components/atoms/Input";
 import { Button } from "@/components/atoms/Button";
 import ErrorMessage from "@/components/molecules/global/ErrorMessage";
@@ -14,6 +14,7 @@ import {
   useUpdateCategoryMutation,
 } from "@/store/api/categoryApi";
 import Spinner from "../global/Spinner";
+import { SingleSelectField } from "../global/SingleSelectField";
 
 export type CategoryFormValues = {
   name: string;
@@ -55,6 +56,7 @@ const AddSubCategoryForm = ({
     setValue,
     formState: { errors, isSubmitting },
     reset,
+    control,
   } = useForm<CategoryFormValues>({
     defaultValues: initialData || {
       name: "",
@@ -133,29 +135,33 @@ const AddSubCategoryForm = ({
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 px-4">
-        <h2 className="text-lg font-semibold">Add New Category</h2>
+        <h2 className="text-lg font-semibold">
+          {isEdit ? "Updating Sub Category" : "Add Sub Category"}
+        </h2>
         <div className="space-y-1">
           <label className="text-sm font-medium" htmlFor="parentCategoryId">
             Parent Category
           </label>
-          <select
-            id="parentCategoryId"
-            {...register("parentCategoryId", {
-              required: "Please select a parent category",
-            })}
-            className="w-full py-2 px-3 border border-gray-300 text-sm rounded-md font-medium"
-            defaultValue=""
-          >
-            <option value="" disabled>
-              Select a category
-            </option>
-            {categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.categoryName}
-              </option>
-            ))}
-          </select>
-          <ErrorMessage error={errors.parentCategoryId} />
+          <Controller
+            name="parentCategoryId"
+            control={control}
+            rules={{ required: "Please select a parent category" }}
+            render={({ field, fieldState, formState }) => (
+              <>
+                <SingleSelectField
+                  field={field}
+                  fieldState={fieldState}
+                  formState={formState}
+                  options={categories.map((cat) => ({
+                    value: cat.id,
+                    label: cat.categoryName,
+                  }))}
+                  placeholder="Select a category"
+                />
+                <ErrorMessage error={fieldState.error} />
+              </>
+            )}
+          />
         </div>
         {/* Category Name */}
         <div className="space-y-1">
