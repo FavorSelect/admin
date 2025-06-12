@@ -13,13 +13,5 @@ export * from "./usersTicketTableColumns";
 export * from "./sellerTableColumns";
 
 // table data
-export * from "./newUsersData";
-export * from "./recentOrdersData";
-export * from "./supportTicketsData";
-export * from "./deletionRequestsData";
-export * from "./categoryData";
-export * from "./membershipData";
 export * from "./productModerationData";
-export * from "./ordersData";
-export * from "./sellersTicketData";
-export * from "./usersTicketData";
+

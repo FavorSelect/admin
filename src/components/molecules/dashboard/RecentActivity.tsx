@@ -10,7 +10,7 @@ import {
   newUsersColumns,
   supportTicketsColumns,
   recentOrdersColumns,
-} from "@/data";
+} from "@/column";
 import { Button } from "@/components/atoms/Button";
 import { useRouter } from "next/navigation";
 import {

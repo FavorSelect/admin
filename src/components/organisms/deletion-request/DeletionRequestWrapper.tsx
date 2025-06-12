@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Title from "@/components/atoms/Title";
-import { deletionRequestsColumns } from "@/data";
+import { deletionRequestsColumns } from "@/column";
 import Table from "@/components/molecules/global/table/Table";
 import { useGetAllDeletionRequestsQuery } from "@/store/api/deletionRequestApi";
 

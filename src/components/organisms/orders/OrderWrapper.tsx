@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Table from "@/components/molecules/global/table/Table";
 import { Input } from "@/components/atoms/Input";
-import { ordersTableColumns } from "@/data";
+import { ordersTableColumns } from "@/column";
 import Title from "@/components/atoms/Title";
 import { Plus, Search } from "lucide-react";
 import { Button } from "@/components/atoms/Button";

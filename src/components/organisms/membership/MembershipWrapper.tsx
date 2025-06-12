@@ -4,7 +4,7 @@ import { Button } from "@/components/atoms/Button";
 import Title from "@/components/atoms/Title";
 import DrawerContainer from "@/components/molecules/global/DrawerContainer";
 import Table from "@/components/molecules/global/table/Table";
-import { membershipTableColumns } from "@/data";
+import { membershipTableColumns } from "@/column";
 import { Plus } from "lucide-react";
 import AddMembershipForm from "@/components/molecules/membership/AddMembershipForm";
 import { useGetAllMembershipsQuery } from "@/store/api/membershipApi";

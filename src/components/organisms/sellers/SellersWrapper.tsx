@@ -1,6 +1,6 @@
 "use client";
 import Table from "@/components/molecules/global/table/Table";
-import { allSellersTableColumns } from "@/data";
+import { allSellersTableColumns } from "@/column";
 import { useGetAllSellersQuery } from "@/store/api/sellerApi";
 import React from "react";
 

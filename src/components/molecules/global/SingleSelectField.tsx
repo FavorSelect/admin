@@ -87,9 +87,13 @@ export function SingleSelectField<
   }, [defaultOption]);
 
   const handleChange = (newValue: SelectOption | null) => {
-    const selectedValue = newValue?.value;
-    setSelectedOption(newValue);
-    onChange(selectedValue);
+    if (newValue === null) {
+      setSelectedOption(null);
+      onChange("");
+    } else {
+      setSelectedOption(newValue);
+      onChange(newValue.value);
+    }
   };
   const selectRef = React.useRef<SelectInstance<SelectOption, false> | null>(
     null

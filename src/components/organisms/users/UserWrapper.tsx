@@ -6,7 +6,7 @@ import Title from "@/components/atoms/Title";
 import { Search } from "lucide-react";
 import { useGetUsersQuery } from "@/store/api/userApi";
 import { User } from "@/types/user";
-import { userTableColumns } from "@/data";
+import { userTableColumns } from "@/column";
 
 const UserWrapper = ({ token }: { token: string }) => {
   const [search, setSearch] = useState("");

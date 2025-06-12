@@ -1,6 +1,6 @@
 "use client";
 import Table from "@/components/molecules/global/table/Table";
-import { pendingSellersTableColumns } from "@/data";
+import { pendingSellersTableColumns } from "@/column";
 import { useGetPendingSellersQuery } from "@/store/api/sellerApi";
 import React from "react";
 

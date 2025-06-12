@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Table from "@/components/molecules/global/table/Table";
-import { sellerTicketTableColumns } from "@/data";
+import { sellerTicketTableColumns } from "@/column";
 import { useGetSellerTicketsQuery } from "@/store/api/ticketApi";
 
 const SellerTicketsWrapper = ({ token }: { token: string }) => {

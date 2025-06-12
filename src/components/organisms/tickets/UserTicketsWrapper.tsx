@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Table from "@/components/molecules/global/table/Table";
-import { usersTicketTableColumns } from "@/data";
+import { usersTicketTableColumns } from "@/column";
 import { useGetUserTicketsQuery } from "@/store/api/ticketApi";
 
 const UserTicketsWrapper = ({ token }: { token: string }) => {

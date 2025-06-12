@@ -90,7 +90,6 @@ const AddCategoryForm = ({
     if (data.image && data.image.length > 0) {
       formData.append("categoryImage", data.image[0]);
     }
-
     try {
       let response;
 

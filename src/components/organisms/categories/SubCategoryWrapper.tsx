@@ -3,7 +3,7 @@ import { Button } from "@/components/atoms/Button";
 import AddSubCategoryForm from "@/components/molecules/categories/AddSubCategoryForm";
 import DrawerContainer from "@/components/molecules/global/DrawerContainer";
 import Table from "@/components/molecules/global/table/Table";
-import { subCategoryTableColumn } from "@/data/subCategoryTableColumn";
+import { subCategoryTableColumn } from "@/column/subCategoryTableColumn";
 import { useGetAllCategoriesQuery } from "@/store/api/categoryApi";
 import { Plus } from "lucide-react";
 import React, { useState } from "react";
