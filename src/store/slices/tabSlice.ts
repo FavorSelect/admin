@@ -7,6 +7,7 @@ interface TabState {
   productModerationActiveTab: string;
   sellersActiveTab: string;
   ticketActiveTab: string;
+  bannerActiveTab: string;
 }
 
 const initialState: TabState = {
@@ -16,6 +17,7 @@ const initialState: TabState = {
   productModerationActiveTab: "List",
   sellersActiveTab: "All Sellers",
   ticketActiveTab: "Seller Tickets",
+  bannerActiveTab: "Homepage",
 };
 
 const tabSlice = createSlice({
@@ -40,6 +42,9 @@ const tabSlice = createSlice({
     setTicketTab(state, action: PayloadAction<string>) {
       state.ticketActiveTab = action.payload;
     },
+    setBannerTab(state, action: PayloadAction<string>) {
+      state.bannerActiveTab = action.payload;
+    },
   },
 });
 
@@ -50,5 +55,6 @@ export const {
   setProductModerationTab,
   setSellersTab,
   setTicketTab,
+  setBannerTab,
 } = tabSlice.actions;
 export default tabSlice.reducer;

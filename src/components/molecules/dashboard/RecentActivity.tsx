@@ -44,8 +44,6 @@ const RecentActivity = ({ token }: { token: string }) => {
     isError: errorTickets,
   } = useGetLatestTicketsQuery(token);
 
-  console.log(ticketsData);
-
   return (
     <div className="space-y-3">
       <Title text="Recent Activity" />

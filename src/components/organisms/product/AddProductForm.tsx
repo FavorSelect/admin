@@ -6,7 +6,7 @@ import { SingleSelectField } from "@/components/molecules/global/SingleSelectFie
 import ErrorMessage from "@/components/molecules/global/ErrorMessage";
 import Spinner from "@/components/molecules/global/Spinner";
 import { Category, SubCategories } from "@/types/category";
-import InputGroup from "./InputGroup";
+import InputGroup from "../../molecules/global/InputGroup";
 import TextAreaGroup from "./TeatAreaGroup";
 import FileUploader from "@/components/molecules/global/FileUploader";
 import { useAddProductMutation } from "@/store/api/productApi";
@@ -180,7 +180,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
       className="space-y-4 max-w-4xl mx-auto px-4"
     >
       <h2 className="text-lg font-semibold">Add Product</h2>
-      <InputGroup
+      <InputGroup<ProductFormValues>
         label="Product Name"
         name="productName"
         register={register}
@@ -196,7 +196,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
         required
         placeholder="Enter product desciption"
       />
-      <InputGroup
+      <InputGroup<ProductFormValues>
         label="Product Brand"
         name="productBrand"
         register={register}
@@ -204,7 +204,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
         required
         placeholder="Enter product brand"
       />
-      <InputGroup
+      <InputGroup<ProductFormValues>
         label="Product Price"
         name="productPrice"
         register={register}
@@ -283,7 +283,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
           </div>
         )}
       />
-      <InputGroup
+      <InputGroup<ProductFormValues>
         label="Stock Quantity"
         name="availableStockQuantity"
         register={register}
@@ -292,28 +292,28 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
         required
         placeholder="Enter avilable stock quantity"
       />
-      <InputGroup
+      <InputGroup<ProductFormValues>
         label="SKU"
         name="stockKeepingUnit"
         register={register}
         errors={errors}
         placeholder="Enter SKU"
       />
-      <InputGroup
+      <InputGroup<ProductFormValues>
         label="Model Number"
         name="productModelNumber"
         register={register}
         errors={errors}
         placeholder="Enter product model number"
       />
-      <InputGroup
+      <InputGroup<ProductFormValues>
         label="Best Sale Tag"
         name="productBestSaleTag"
         register={register}
         errors={errors}
         placeholder="Enter best sale tag"
       />
-      <InputGroup
+      <InputGroup<ProductFormValues>
         label="Discount (%)"
         name="productDiscountPercentage"
         register={register}
@@ -321,7 +321,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
         type="number"
         placeholder="Enter discount percentage"
       />
-      <InputGroup
+      <InputGroup<ProductFormValues>
         label="Discount Price"
         name="productDiscountPrice"
         register={register}
@@ -329,7 +329,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
         type="number"
         placeholder="Enter discounted price"
       />
-      <InputGroup
+      <InputGroup<ProductFormValues>
         label="Sale Days Left"
         name="saleDayleft"
         register={register}
@@ -337,7 +337,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
         type="number"
         placeholder="Enter days left for sale"
       />
-      <InputGroup
+      <InputGroup<ProductFormValues>
         label="Weight"
         name="productWeight"
         register={register}
@@ -363,31 +363,31 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
           </div>
         )}
       />
-      <InputGroup
+      <InputGroup<ProductFormValues>
         label="Product Video URL"
         name="productVideoUrl"
         register={register}
         placeholder="Enter product video URL"
       />
-      <InputGroup
+      <InputGroup<ProductFormValues>
         label="Sizes"
         name="productSizes"
         register={register}
         placeholder="Enter available sizes (e.g. S, M, L)"
       />
-      <InputGroup
+      <InputGroup<ProductFormValues>
         label="Colors"
         name="productColors"
         register={register}
         placeholder="Enter available colors"
       />
-      <InputGroup
+      <InputGroup<ProductFormValues>
         label="Dimensions"
         name="productDimensions"
         register={register}
         placeholder="Enter dimensions (e.g. 10x20x5 cm)"
       />
-      <InputGroup
+      <InputGroup<ProductFormValues>
         label="Material"
         name="productMaterial"
         register={register}
