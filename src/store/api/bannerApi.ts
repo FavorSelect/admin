@@ -1,24 +1,28 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { AddBannerResponse } from "@/types/banner";
 import { apiSlice } from "./api";
 
 export const bannerApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // Add Homepage Banner
-    addHomepageBanner: builder.mutation<any, { token: string; data: FormData }>(
-      {
-        query: ({ token, data }) => ({
-          url: "api/advertisement/add-homepage-banners",
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: data,
-        }),
-      }
-    ),
+    addHomepageBanner: builder.mutation<
+      AddBannerResponse,
+      { token: string; data: FormData }
+    >({
+      query: ({ token, data }) => ({
+        url: "api/advertisement/add-homepage-banners",
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: data,
+      }),
+    }),
 
     // Add Weekly Promotion Banner
-    addWeeklyBanner: builder.mutation<any, { token: string; data: FormData }>({
+    addWeeklyBanner: builder.mutation<
+      AddBannerResponse,
+      { token: string; data: FormData }
+    >({
       query: ({ token, data }) => ({
         url: "api/advertisement/add-weekly-banners",
         method: "POST",
@@ -30,7 +34,10 @@ export const bannerApi = apiSlice.injectEndpoints({
     }),
 
     // Add Popular Banner
-    addPopularBanner: builder.mutation<any, { token: string; data: FormData }>({
+    addPopularBanner: builder.mutation<
+      AddBannerResponse,
+      { token: string; data: FormData }
+    >({
       query: ({ token, data }) => ({
         url: "api/advertisement/add-popular-banners",
         method: "POST",
@@ -42,7 +49,10 @@ export const bannerApi = apiSlice.injectEndpoints({
     }),
 
     // Add Brand Poster
-    addBrandPoster: builder.mutation<any, { token: string; data: FormData }>({
+    addBrandPoster: builder.mutation<
+      AddBannerResponse,
+      { token: string; data: FormData }
+    >({
       query: ({ token, data }) => ({
         url: "api/advertisement/add-brand-banners",
         method: "POST",
@@ -54,7 +64,10 @@ export const bannerApi = apiSlice.injectEndpoints({
     }),
 
     // Add Product Poster
-    addProductPoster: builder.mutation<any, { token: string; data: FormData }>({
+    addProductPoster: builder.mutation<
+      AddBannerResponse,
+      { token: string; data: FormData }
+    >({
       query: ({ token, data }) => ({
         url: "api/advertisement/add-product-banners",
         method: "POST",
