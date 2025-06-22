@@ -80,7 +80,7 @@ export const AddHomePageBannerForm = ({ token }: { token: string }) => {
             <FileUploader
               onFilesSelected={field.onChange}
               value={field.value}
-              multiple={false}
+              multiple={true}
               maxSizeMB={3}
               acceptedTypes={["image/jpeg", "image/png"]}
               placeholder="Upload banner image"

@@ -19,6 +19,7 @@ import {
   GalleryHorizontalEnd,
   Ticket,
   ShieldAlert,
+  Warehouse,
 } from "lucide-react";
 
 type SidebarItem = {
@@ -43,6 +44,7 @@ const items: SidebarItem[] = [
   { label: "Orders", href: "/orders", icon: ShoppingCart },
   { label: "Banner", href: "/banner", icon: GalleryHorizontalEnd },
   { label: "Tickets", href: "/tickets", icon: Ticket },
+  { label: "Address", href: "/warehouse-address", icon: Warehouse },
 ];
 
 interface SidebarProps {

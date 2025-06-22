@@ -23,8 +23,23 @@ export const userApi = apiSlice.injectEndpoints({
         };
       },
     }),
+
+    updateCanReviewPermission: builder.mutation({
+      query: ({
+        userId,
+        canReview,
+      }: {
+        userId: number;
+        canReview: boolean;
+      }) => ({
+        url: `/api/admin/dashboard/users/${userId}/review-permission`,
+        method: "PUT",
+        body: { canReview },
+      }),
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useGetUsersQuery } = userApi;
+export const { useGetUsersQuery, useUpdateCanReviewPermissionMutation } =
+  userApi;

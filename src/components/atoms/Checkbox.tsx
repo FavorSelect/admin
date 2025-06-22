@@ -3,11 +3,14 @@
 import React from "react";
 
 type CheckboxProps = {
-  checked: boolean;
+  checked?: boolean;
   onChange: (checked: boolean) => void;
 };
 
-export const Checkbox: React.FC<CheckboxProps> = ({ checked, onChange }) => {
+export const Checkbox: React.FC<CheckboxProps> = ({
+  checked = false,
+  onChange,
+}) => {
   return (
     <label className="flex items-start cursor-pointer">
       <input

@@ -148,15 +148,14 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
 
     // Cover Image (single)
     if (data.coverImageUrl?.[0]) {
-      formData.append("coverImageUrl", data.coverImageUrl[0]);
+      formData.append("coverImage", data.coverImageUrl[0]);
     }
     // Gallery Images (multiple)
     if (data.galleryImageUrls && data.galleryImageUrls.length > 0) {
       Array.from(data.galleryImageUrls).forEach((file) => {
-        formData.append("galleryImageUrls[]", file);
+        formData.append("galleryImage", file);
       });
     }
-    console.log(formData);
     try {
       const res = await addProduct({ token, data: formData }).unwrap();
       console.log("✅ Product added:", res);

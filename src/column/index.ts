@@ -14,4 +14,3 @@ export * from "./sellerTableColumns";
 
 // table data
 export * from "./productModerationData";
-

@@ -12,7 +12,7 @@ const UserWrapper = ({ token }: { token: string }) => {
   const [search, setSearch] = useState("");
 
   const { data: userResponse, isLoading, isError } = useGetUsersQuery(token);
-
+  console.log(userResponse);
   const users = userResponse?.users ?? [];
 
   const filteredUsers = users.filter((user: User) => {
