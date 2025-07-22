@@ -14,7 +14,7 @@ export type AddBrandBannerFormValue = {
   image: File[];
 };
 
-export const AddBrandBannerForm = ({ token }: { token: string }) => {
+export const AddBrandBannerForm = () => {
   const {
     control,
     register,
@@ -38,7 +38,7 @@ export const AddBrandBannerForm = ({ token }: { token: string }) => {
     }
 
     try {
-      const res = await addBrandPoster({ token, data: formData }).unwrap();
+      const res = await addBrandPoster({ data: formData }).unwrap();
       console.log("✅ Brand banner added:", res);
       toast.success(res?.message || "✅ Brand banner added successfully!");
       reset();

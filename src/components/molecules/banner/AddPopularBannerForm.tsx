@@ -14,7 +14,7 @@ export type AddPopularBannerFormValue = {
   image: File[];
 };
 
-export const AddPopularBannerForm = ({ token }: { token: string }) => {
+export const AddPopularBannerForm = () => {
   const {
     control,
     register,
@@ -38,7 +38,7 @@ export const AddPopularBannerForm = ({ token }: { token: string }) => {
     }
 
     try {
-      const res = await addPopularBanner({ token, data: formData }).unwrap();
+      const res = await addPopularBanner({ data: formData }).unwrap();
       console.log("✅ Popular banner added:", res);
       toast.success(res?.message || "✅ Popular banner added successfully!");
       reset();

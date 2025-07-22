@@ -14,6 +14,7 @@ import {
 import toggleSidebarReducer from "@/store/slices/toggleSidebarSlice";
 import tabReducer from "@/store/slices/tabSlice";
 import authReducer from "@/store/slices/adminSlice";
+import authTokenReducer from "@/store/slices/authSlice";
 
 const persistConfig = {
   key: "root",
@@ -26,6 +27,7 @@ const rootReducer = {
   toggleSidebar: toggleSidebarReducer,
   tabs: tabReducer,
   admin: authReducer,
+  auth: authTokenReducer,
 };
 
 const combinedReducer = combineReducers(rootReducer);

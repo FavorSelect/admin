@@ -15,7 +15,7 @@ export type AddWeeklyBannerFormValue = {
   image: File[];
 };
 
-export const AddWeeklyBannerForm = ({ token }: { token: string }) => {
+export const AddWeeklyBannerForm = () => {
   const {
     control,
     register,
@@ -39,7 +39,7 @@ export const AddWeeklyBannerForm = ({ token }: { token: string }) => {
     }
 
     try {
-      const res = await addWeeklyBanner({ token, data: formData }).unwrap();
+      const res = await addWeeklyBanner({ data: formData }).unwrap();
       console.log("✅ Weekly banner added:", res);
       toast.success(res?.message || "✅ Weekly banner added successfully!");
       reset();

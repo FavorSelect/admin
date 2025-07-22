@@ -15,7 +15,7 @@ export type AddHomePageBannerFormValue = {
   image: File[];
 };
 
-export const AddHomePageBannerForm = ({ token }: { token: string }) => {
+export const AddHomePageBannerForm = () => {
   const {
     control,
     register,
@@ -39,7 +39,7 @@ export const AddHomePageBannerForm = ({ token }: { token: string }) => {
     }
 
     try {
-      const res = await addHomepageBanner({ token, data: formData }).unwrap();
+      const res = await addHomepageBanner({ data: formData }).unwrap();
       console.log("✅ Homepage banner added:", res);
       toast.success(res?.message || "✅ Homepage banner added successfully!");
       reset();

@@ -4,7 +4,7 @@ import { Button } from "@/components/atoms/Button";
 import SidebarHeader from "@/components/molecules/sidebar/SidebarHeader";
 import SidebarNavItem from "@/components/molecules/sidebar/SidebarNavItem";
 import SidebarToggleButton from "@/components/molecules/sidebar/SidebarToggleButton";
-import SidebarLogoutItem from "@/components/molecules/sidebar/SidebarLogoutItem";
+// import SidebarLogoutItem from "@/components/molecules/sidebar/SidebarLogoutItem";
 import { cn } from "@/utils/cn";
 
 import {
@@ -111,10 +111,10 @@ const Sidebar: React.FC<SidebarProps> = ({
 
           <SidebarToggleButton isOpen={isOpen} onClick={toggleAppSlidebar} />
 
-          <SidebarLogoutItem
+          {/* <SidebarLogoutItem
             isExpanded={isExpanded}
             isActive={pathname === "#"}
-          />
+          /> */}
         </div>
       </div>
     </div>

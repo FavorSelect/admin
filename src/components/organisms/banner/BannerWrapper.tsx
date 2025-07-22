@@ -11,7 +11,7 @@ import { setBannerTab } from "@/store/slices/tabSlice";
 import { RootState } from "@/store/store";
 import React from "react";
 
-const BannerWrapper = ({ token }: { token: string }) => {
+const BannerWrapper = () => {
   const dispatch = useAppDispatch();
   const activeTab = useAppSelector(
     (state: RootState) => state.tabs.bannerActiveTab
@@ -26,19 +26,19 @@ const BannerWrapper = ({ token }: { token: string }) => {
         onTabChange={(tab) => dispatch(setBannerTab(tab))}
       >
         <Tab label="Homepage">
-          <AddHomePageBannerForm token={token} />
+          <AddHomePageBannerForm />
         </Tab>
         <Tab label="Weekly">
-          <AddWeeklyBannerForm token={token} />
+          <AddWeeklyBannerForm />
         </Tab>
         <Tab label="Popular">
-          <AddPopularBannerForm token={token} />
+          <AddPopularBannerForm />
         </Tab>
         <Tab label="Brand">
-          <AddBrandBannerForm token={token} />
+          <AddBrandBannerForm />
         </Tab>
         <Tab label="Product">
-          <AddProductBannerForm token={token} />
+          <AddProductBannerForm />
         </Tab>
       </Tabs>
     </div>
