@@ -148,7 +148,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
 
     // Cover Image (single)
     if (data.coverImageUrl?.[0]) {
-      formData.append("coverImageUrl", data.coverImageUrl[0]);
+      formData.append("coverImage", data.coverImageUrl[0]);
     }
     // Gallery Images (multiple)
     if (data.galleryImageUrls && data.galleryImageUrls.length > 0) {
