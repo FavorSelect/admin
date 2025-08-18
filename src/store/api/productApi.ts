@@ -8,6 +8,7 @@ export const productApi = apiSlice.injectEndpoints({
         url: "api/admin/dashboard/add-products",
         method: "POST",
         headers: {
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
         body: data,
