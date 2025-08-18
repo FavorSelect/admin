@@ -3,15 +3,16 @@ import { apiSlice } from "./api";
 
 export const productApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    addProduct: builder.mutation<any, { token: string; data: FormData }>({
-      query: ({ token, data }) => ({
+    addProduct: builder.mutation<any, { data: FormData }>({
+      query: ({ data }) => ({
         url: "api/admin/dashboard/add-products",
         method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          
         },
         body: data,
+      
+        credentials: 'include',  
       }),
     }),
   }),
