@@ -11,6 +11,7 @@ export * from "./ordersTableColumns";
 export * from "./sellerTicketTableColumns";
 export * from "./usersTicketTableColumns";
 export * from "./sellerTableColumns";
+export * from "./productColumns";
 
 // table data
 export * from "./productModerationData";

@@ -12,6 +12,8 @@ interface FileUploaderProps {
   acceptedTypes?: string[];
   aspectRatio?: number;
   placeholder?: string;
+  existingUrls?: string[];
+  onRemoveExisting?: (index: number) => void;
 }
 
 const FileUploader: React.FC<FileUploaderProps> = ({
@@ -22,6 +24,8 @@ const FileUploader: React.FC<FileUploaderProps> = ({
   acceptedTypes = ["image/jpeg", "image/png"],
   aspectRatio,
   placeholder,
+  existingUrls,
+  onRemoveExisting,
 }) => {
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
@@ -89,6 +93,34 @@ const FileUploader: React.FC<FileUploaderProps> = ({
         {placeholder} {multiple ? "files" : "a file"} here, or click to select
       </p>
 
+      {existingUrls && existingUrls.length > 0 && (
+        <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-4">
+          {existingUrls.map((url, index) => (
+            <div
+              key={`existing-${index}`}
+              className="relative group border border-pale-rose rounded-md overflow-hidden"
+            >
+              <Image
+                src={url}
+                alt={`Existing ${index + 1}`}
+                className="w-full h-28 object-cover"
+                width={200}
+                height={200}
+              />
+              <Button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onRemoveExisting?.(index);
+                }}
+                className="absolute top-1 right-1 bg-white text-gray-700 rounded-full p-1 shadow hover:text-red-600 z-10"
+              >
+                <X size={18} />
+              </Button>
+            </div>
+          ))}
+        </div>
+      )}
       {value && value.length > 0 && (
         <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-4">
           {value.map((file, index) => {
