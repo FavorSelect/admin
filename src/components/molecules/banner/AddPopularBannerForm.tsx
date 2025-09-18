@@ -70,22 +70,22 @@ export const AddPopularBannerForm = () => {
         control={control}
         name="image"
         rules={{ required: "Please upload a popular banner image" }}
-        render={({ field }) => (
-          <div>
+        render={({ field, fieldState }) => (
+          <div className="space-y-2">
             <label className="font-semibold text-sm">
               Upload Popular Banner Image
             </label>
+
             <FileUploader
-              onFilesSelected={field.onChange}
-              value={field.value}
-              multiple={false}
-              maxSizeMB={3}
-              acceptedTypes={["image/jpeg", "image/png"]}
-              placeholder="Upload image"
+              files={field.value || []}
+              onFilesChange={field.onChange}
+              maxFiles={1}
             />
-            {errors.image && (
+
+            {/* Error message */}
+            {fieldState.error && (
               <p className="text-sm text-red-500 mt-2">
-                {errors.image.message}
+                {fieldState.error.message}
               </p>
             )}
           </div>

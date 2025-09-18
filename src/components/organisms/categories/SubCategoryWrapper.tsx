@@ -9,9 +9,7 @@ import { Plus } from "lucide-react";
 import React, { useState } from "react";
 
 const SubCategoryWrapper = ({ token }: { token: string }) => {
-  const { data, refetch } = useGetAllCategoriesQuery({
-    token,
-  });
+  const { data, refetch } = useGetAllCategoriesQuery();
 
   const [isOpen, setIsOpen] = useState(false);
 
