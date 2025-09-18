@@ -52,18 +52,17 @@ export default function MyFormPage() {
       <Controller
         control={control}
         name="files"
-        render={({ field }) => (
+        render={({ field, fieldState }) => (
           <div>
             <FileUploader
-              onFilesSelected={field.onChange}
-              value={field.value}
+              files={field.value || []}
+              onFilesChange={field.onChange}
+              maxFiles={3}
               multiple={true}
-              maxSizeMB={3}
-              acceptedTypes={["image/jpeg", "image/png"]}
             />
-            {errors.files && (
+            {fieldState.error && (
               <p className="text-sm text-red-500 mt-2">
-                {errors.files.message}
+                {fieldState.error.message}
               </p>
             )}
           </div>

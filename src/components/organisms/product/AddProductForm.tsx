@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
@@ -212,6 +213,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
 
     try {
       if (editId) {
+        console.log(editId);
         const res = await updateProduct({
           id: editId,
           data: formData,
@@ -330,35 +332,44 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
         control={control}
         name="coverImageUrl"
         rules={{
-          validate: (files) =>
-            existingCoverUrl ||
-            (files && files.length > 0) ||
-            "Please upload cover image",
+          validate: (files) => {
+            const hasExisting = !!existingCoverUrl;
+            const hasNew = (files?.length ?? 0) > 0;
+            return hasExisting || hasNew || "Please upload cover image";
+          },
         }}
-        render={({ field }) => (
-          <div>
-            <label className="font-semibold text-sm">Cover image</label>
+        render={({ field, fieldState }) => (
+          <div className="space-y-2">
+            <label className="font-semibold text-sm">Cover Image</label>
+
             <FileUploader
-              onFilesSelected={(files) => {
-                if (files && files.length > 0) setExistingCoverUrl(null);
-                field.onChange(files);
-              }}
-              value={field.value}
-              multiple={false}
-              maxSizeMB={3}
-              acceptedTypes={["image/jpeg", "image/png"]}
-              placeholder="Upload cover image"
-              existingUrls={existingCoverUrl ? [existingCoverUrl] : []}
-              onRemoveExisting={() => setExistingCoverUrl(null)}
+              files={field.value || []}
+              onFilesChange={field.onChange}
+              maxFiles={1}
             />
-            {errors.coverImageUrl && (
-              <p className="text-sm text-red-500 mt-2">
-                {errors.coverImageUrl.message}
-              </p>
+
+            {/*  SHOW EXISTING COVER ONLY WHEN NO NEW FILE SELECTED */}
+            {existingCoverUrl && (!field.value || field.value.length === 0) && (
+              <div className="mt-2 flex items-center gap-3 rounded-md border border-slate-200 p-3">
+                <img
+                  src={existingCoverUrl}
+                  alt="Current cover"
+                  className="h-16 w-16 rounded object-cover"
+                />
+                <div className="text-sm">
+                  <div className="font-medium">Current cover</div>
+                  <div className="text-muted-foreground">
+                    This image will be kept unless you upload a new one.
+                  </div>
+                </div>
+              </div>
             )}
+
+            <ErrorMessage error={fieldState.error} />
           </div>
         )}
       />
+
       <InputGroup<ProductFormValues>
         label="Stock Quantity"
         name="availableStockQuantity"
@@ -428,15 +439,13 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
           control={control}
           name="galleryImageUrls"
           render={({ field }) => (
-            <div>
-              <label className="font-semibold text-sm">Gallery image</label>
+            <div className="space-y-2">
+              <label className="font-semibold text-sm">Gallery Images</label>
               <FileUploader
-                onFilesSelected={field.onChange}
-                value={field.value}
+                files={field.value || []}
+                onFilesChange={field.onChange}
+                maxFiles={6}
                 multiple={true}
-                maxSizeMB={3}
-                acceptedTypes={["image/jpeg", "image/png"]}
-                placeholder="Upload gallery image"
               />
             </div>
           )}
