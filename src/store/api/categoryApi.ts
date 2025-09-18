@@ -29,13 +29,10 @@ export const categoryApi = apiSlice.injectEndpoints({
         }),
       }
     ),
-    getAllCategories: builder.query<CategoryResponse, { token: string }>({
-      query: ({ token }) => ({
+    getAllCategories: builder.query<CategoryResponse, void>({
+      query: () => ({
         url: "api/general/categories",
         method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       }),
     }),
     getSubcategoriesById: builder.query<any, { token: string; id: string }>({

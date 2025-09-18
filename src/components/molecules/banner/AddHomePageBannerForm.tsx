@@ -71,23 +71,24 @@ export const AddHomePageBannerForm = () => {
       <Controller
         control={control}
         name="image"
-        rules={{ required: "Please upload a banner image" }}
-        render={({ field }) => (
-          <div>
+        rules={{ required: "Please upload at least one banner image" }}
+        render={({ field, fieldState }) => (
+          <div className="space-y-2">
             <label className="font-semibold text-sm">
-              Upload homepage banner image
+              Upload Homepage Banner Images
             </label>
+
             <FileUploader
-              onFilesSelected={field.onChange}
-              value={field.value}
+              files={field.value || []}
+              onFilesChange={field.onChange}
+              maxFiles={5}
               multiple={true}
-              maxSizeMB={3}
-              acceptedTypes={["image/jpeg", "image/png"]}
-              placeholder="Upload banner image"
             />
-            {errors.image && (
+
+            {/* Error message */}
+            {fieldState.error && (
               <p className="text-sm text-red-500 mt-2">
-                {errors.image.message}
+                {fieldState.error.message}
               </p>
             )}
           </div>

@@ -70,22 +70,20 @@ export const AddProductBannerForm = () => {
         control={control}
         name="image"
         rules={{ required: "Please upload a product banner image" }}
-        render={({ field }) => (
+        render={({ field, fieldState }) => (
           <div>
             <label className="font-semibold text-sm">
               Upload Product Banner Image
             </label>
             <FileUploader
-              onFilesSelected={field.onChange}
-              value={field.value}
+              files={field.value || []}
+              onFilesChange={field.onChange}
+              maxFiles={5}
               multiple={true}
-              maxSizeMB={3}
-              acceptedTypes={["image/jpeg", "image/png"]}
-              placeholder="Upload image"
             />
-            {errors.image && (
+            {fieldState.error && (
               <p className="text-sm text-red-500 mt-2">
-                {errors.image.message}
+                {fieldState.error.message}
               </p>
             )}
           </div>

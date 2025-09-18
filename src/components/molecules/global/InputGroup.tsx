@@ -10,6 +10,8 @@ interface InputGroupProps<T extends Record<string, unknown>> {
   required?: boolean;
   placeholder?: string;
   type?: string;
+  step?: string;
+  min?: string;
 }
 
 const InputGroup = <T extends Record<string, unknown>>({
@@ -20,6 +22,8 @@ const InputGroup = <T extends Record<string, unknown>>({
   required,
   placeholder,
   type = "text",
+  step,
+  min,
 }: InputGroupProps<T>) => {
   return (
     <div className="space-y-1">
@@ -28,6 +32,8 @@ const InputGroup = <T extends Record<string, unknown>>({
       </label>
       <Input
         type={type}
+        step={step}
+        min={min}
         placeholder={placeholder}
         {...register(
           name,

@@ -38,7 +38,7 @@ const items: SidebarItem[] = [
   { label: "Deletion", href: "/deletion-requests", icon: ShieldAlert },
   { label: "Categories", href: "/categories", icon: LayoutGrid },
   { label: "Memberships", href: "/membership", icon: Award },
-  { label: "Product", href: "/product", icon: PackageCheck },
+  { label: "Product", href: "/products", icon: PackageCheck },
   { label: "Users", href: "/users", icon: Users },
   { label: "Sellers", href: "/sellers", icon: Store },
   { label: "Orders", href: "/orders", icon: ShoppingCart },

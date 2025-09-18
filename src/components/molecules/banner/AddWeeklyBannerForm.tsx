@@ -78,12 +78,10 @@ export const AddWeeklyBannerForm = () => {
               Upload Weekly Banner Image
             </label>
             <FileUploader
-              onFilesSelected={field.onChange}
-              value={field.value}
+              files={field.value || []}
+              onFilesChange={field.onChange}
+              maxFiles={5}
               multiple={true}
-              maxSizeMB={3}
-              acceptedTypes={["image/jpeg", "image/png"]}
-              placeholder="Upload image"
             />
             {errors.image && (
               <p className="text-sm text-red-500 mt-2">

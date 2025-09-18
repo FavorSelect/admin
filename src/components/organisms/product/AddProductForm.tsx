@@ -1,5 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button } from "@/components/atoms/Button";
 import { SingleSelectField } from "@/components/molecules/global/SingleSelectField";
@@ -9,7 +12,11 @@ import { Category, SubCategories } from "@/types/category";
 import InputGroup from "../../molecules/global/InputGroup";
 import TextAreaGroup from "./TeatAreaGroup";
 import FileUploader from "@/components/molecules/global/FileUploader";
-import { useAddProductMutation } from "@/store/api/productApi";
+import {
+  useAddProductMutation,
+  useFetchProductByIdQuery,
+  useUpdateProductMutation, // ⬅️ NEW
+} from "@/store/api/productApi";
 import { toast } from "react-hot-toast";
 import { Plus } from "lucide-react";
 
@@ -46,13 +53,22 @@ export type ProductFormValues = {
 
 type AddProductFormProps = {
   categories: Category[];
-  token: string;
+  token?: string;
+  editId?: string;
 };
 
 const AddProductForm: React.FC<AddProductFormProps> = ({
   categories,
   token,
+  editId,
 }) => {
+  const [addProduct] = useAddProductMutation();
+  const [updateProduct] = useUpdateProductMutation(); // ⬅️ NEW
+  const { data, isLoading } = useFetchProductByIdQuery(editId!, {
+    skip: !editId,
+  });
+  const [existingCoverUrl, setExistingCoverUrl] = useState<string | null>(null);
+
   const {
     control,
     register,
@@ -72,7 +88,45 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
       availableStockQuantity: null,
     },
   });
-  const [addProduct] = useAddProductMutation();
+
+  useEffect(() => {
+    if (!editId || !data) return;
+
+    setExistingCoverUrl(data.coverImageUrl ?? null);
+
+    const parentCategoryId = data.productCategoryId
+      ? String(data.productCategoryId)
+      : "";
+
+    reset({
+      productCategoryId: parentCategoryId,
+      productSubcategoryId: "",
+
+      productName: data.productName ?? "",
+      productDescription: data.productDescription ?? "",
+      productBrand: data.productBrand ?? "",
+      productPrice: data.productPrice ?? null,
+      availableStockQuantity: data.availableStockQuantity ?? null,
+
+      stockKeepingUnit: data.stockKeepingUnit ?? "",
+      productModelNumber: data.productModelNumber ?? "",
+      productBestSaleTag: data.productBestSaleTag ?? "",
+      productDiscountPercentage: data.productDiscountPercentage ?? undefined,
+      productDiscountPrice: data.productDiscountPrice ?? undefined,
+      saleDayleft: data.saleDayleft ?? undefined,
+      productWeight: data.productWeight ?? undefined,
+      productVideoUrl: data.productVideoUrl ?? "",
+      productSizes: data.productSizes ?? "",
+      productColors: data.productColors ?? "",
+      productDimensions: data.productDimensions ?? "",
+      productMaterial: data.productMaterial ?? "",
+      productWarrantyInfo: data.productWarrantyInfo ?? "",
+      productReturnPolicy: data.productReturnPolicy ?? "",
+
+      coverImageUrl: [],
+      galleryImageUrls: [],
+    });
+  }, [editId, data, reset]);
 
   // Watch for main category selection
   const selectedCategoryId = watch("productCategoryId");
@@ -148,18 +202,29 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
 
     // Cover Image (single)
     if (data.coverImageUrl?.[0]) {
-      formData.append("coverImage", data.coverImageUrl[0]);
+      formData.append("coverImageUrl", data.coverImageUrl[0]);
     }
-    // Gallery Images (multiple)
-    if (data.galleryImageUrls && data.galleryImageUrls.length > 0) {
+    // Gallery Images (multiple) send only during update flow
+    if (editId && data.galleryImageUrls && data.galleryImageUrls.length > 0) {
       Array.from(data.galleryImageUrls).forEach((file) => {
-        formData.append("galleryImage", file);
+        formData.append("galleryImageUrls", file);
       });
     }
+
     try {
-      const res = await addProduct({ token, data: formData }).unwrap();
-      console.log("✅ Product added:", res);
-      toast.success(res?.message || "✅ Product added successfully!");
+      if (editId) {
+        console.log(editId);
+        const res = await updateProduct({
+          id: editId,
+          data: formData,
+        }).unwrap();
+        console.log("✅ Product updated:", res);
+        toast.success(res?.message || "✅ Product updated successfully!");
+      } else {
+        const res = await addProduct({ data: formData }).unwrap();
+        console.log("✅ Product added:", res);
+        toast.success(res?.message || "✅ Product added successfully!");
+      }
       reset();
     } catch (error: unknown) {
       console.error("❌ Submit failed:", error);
@@ -176,9 +241,11 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-4 max-w-4xl mx-auto px-4"
+      className="space-y-4 max-w-4xl px-4"
     >
-      <h2 className="text-lg font-semibold">Add Product</h2>
+      <h2 className="text-lg font-semibold">
+        {!editId ? "Add Product" : "Update Product"}
+      </h2>
       <InputGroup<ProductFormValues>
         label="Product Name"
         name="productName"
@@ -211,6 +278,8 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
         type="number"
         required
         placeholder="Enter product price"
+        step="0.01"
+        min="0"
       />
       {/* MAIN CATEGORY */}
       <div>
@@ -262,26 +331,45 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
       <Controller
         control={control}
         name="coverImageUrl"
-        rules={{ required: "Please upload cover image" }}
-        render={({ field }) => (
-          <div>
-            <label className="font-semibold text-sm">Cover image</label>
+        rules={{
+          validate: (files) => {
+            const hasExisting = !!existingCoverUrl;
+            const hasNew = (files?.length ?? 0) > 0;
+            return hasExisting || hasNew || "Please upload cover image";
+          },
+        }}
+        render={({ field, fieldState }) => (
+          <div className="space-y-2">
+            <label className="font-semibold text-sm">Cover Image</label>
+
             <FileUploader
-              onFilesSelected={field.onChange}
-              value={field.value}
-              multiple={false}
-              maxSizeMB={3}
-              acceptedTypes={["image/jpeg", "image/png"]}
-              placeholder="Upload cover image"
+              files={field.value || []}
+              onFilesChange={field.onChange}
+              maxFiles={1}
             />
-            {errors.coverImageUrl && (
-              <p className="text-sm text-red-500 mt-2">
-                {errors.coverImageUrl.message}
-              </p>
+
+            {/*  SHOW EXISTING COVER ONLY WHEN NO NEW FILE SELECTED */}
+            {existingCoverUrl && (!field.value || field.value.length === 0) && (
+              <div className="mt-2 flex items-center gap-3 rounded-md border border-slate-200 p-3">
+                <img
+                  src={existingCoverUrl}
+                  alt="Current cover"
+                  className="h-16 w-16 rounded object-cover"
+                />
+                <div className="text-sm">
+                  <div className="font-medium">Current cover</div>
+                  <div className="text-muted-foreground">
+                    This image will be kept unless you upload a new one.
+                  </div>
+                </div>
+              </div>
             )}
+
+            <ErrorMessage error={fieldState.error} />
           </div>
         )}
       />
+
       <InputGroup<ProductFormValues>
         label="Stock Quantity"
         name="availableStockQuantity"
@@ -327,6 +415,8 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
         errors={errors}
         type="number"
         placeholder="Enter discounted price"
+        step="0.01"
+        min="0"
       />
       <InputGroup<ProductFormValues>
         label="Sale Days Left"
@@ -341,27 +431,26 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
         name="productWeight"
         register={register}
         errors={errors}
-        type="number"
+        type="text"
         placeholder="Enter product weight (in kg)"
       />
-      {/* gallery image Uploader */}
-      <Controller
-        control={control}
-        name="galleryImageUrls"
-        render={({ field }) => (
-          <div>
-            <label className="font-semibold text-sm">Gallery image</label>
-            <FileUploader
-              onFilesSelected={field.onChange}
-              value={field.value}
-              multiple={true}
-              maxSizeMB={3}
-              acceptedTypes={["image/jpeg", "image/png"]}
-              placeholder="Upload gallery image"
-            />
-          </div>
-        )}
-      />
+      {editId && (
+        <Controller
+          control={control}
+          name="galleryImageUrls"
+          render={({ field }) => (
+            <div className="space-y-2">
+              <label className="font-semibold text-sm">Gallery Images</label>
+              <FileUploader
+                files={field.value || []}
+                onFilesChange={field.onChange}
+                maxFiles={6}
+                multiple={true}
+              />
+            </div>
+          )}
+        />
+      )}
       <InputGroup<ProductFormValues>
         label="Product Video URL"
         name="productVideoUrl"
@@ -407,14 +496,18 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
 
       {/* SUBMIT BUTTON */}
       <div className="flex justify-end pt-2 pb-3">
-        <Button type="submit" disabled={isSubmitting} variant="authBtn">
+        <Button
+          type="submit"
+          disabled={isSubmitting || (editId ? isLoading : false)}
+          variant="authBtn"
+        >
           {isSubmitting ? (
             <>
-              <Spinner /> Adding
+              <Spinner /> {editId ? "Updating" : "Adding"}
             </>
           ) : (
             <>
-              <Plus /> Add Product
+              <Plus /> {editId ? "Update Product" : "Add Product"}
             </>
           )}
         </Button>
